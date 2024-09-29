@@ -34,7 +34,48 @@ const Home = ({ user }: IProps) => {
                 {/* Goals Section */}
                 <Grid item xs={12} md={8}>
                     <Grid container spacing={3}>
-                        {Array(4)
+                        {user.goals &&
+                            user.goals.map((_, index) => (
+                                <Grid item xs={12} md={6} key={index}>
+                                    <Paper
+                                        elevation={3}
+                                        sx={{
+                                            padding: 3,
+                                            borderRadius: 2,
+                                            backgroundColor:
+                                                index === 5
+                                                    ? "#e3f2fd"
+                                                    : "#fffde7",
+                                            border:
+                                                index === 5
+                                                    ? "2px solid #2196f3"
+                                                    : "1px solid #cfd8dc",
+                                            height: "120px", // Adjusted height for uniformity
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                            alignItems: "center", // Center align content
+                                        }}
+                                    >
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontWeight: "bold",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Goal: {_.goalName}
+                                        </Typography>
+                                        <Typography
+                                            variant="body1"
+                                            sx={{ textAlign: "center" }}
+                                        >
+                                            Current Streak: {_.progress} %
+                                        </Typography>
+                                    </Paper>
+                                </Grid>
+                            ))}
+                        {/* {Array(4)
                             .fill(null)
                             .map((_, index) => (
                                 <Grid item xs={12} md={6} key={index}>
@@ -75,7 +116,7 @@ const Home = ({ user }: IProps) => {
                                         </Typography>
                                     </Paper>
                                 </Grid>
-                            ))}
+                            ))} */}
                         {/* Daily Affirmations */}
                         <Grid item xs={12}>
                             <Paper

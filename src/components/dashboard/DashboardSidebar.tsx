@@ -59,28 +59,28 @@ const items: SidebarNavItems[] = [
     },
 ];
 
-const goalItems: SidebarNavItems[] = [
-    {
-        href: "/goal/goal1",
-        icon: <span style={{ width: 0 }}></span>,
-        title: "Goal 1",
-    },
-    {
-        href: "/goal/goal2",
-        icon: <span style={{ width: 0 }}></span>,
-        title: "Goal 2",
-    },
-    {
-        href: "/goal/goal3",
-        icon: <span style={{ width: 0 }}></span>,
-        title: "Goal 3",
-    },
-    {
-        href: "/goal/goal4",
-        icon: <span style={{ width: 0 }}></span>,
-        title: "Goal 4",
-    },
-];
+// const goalItems: SidebarNavItems[] = [
+//     {
+//         href: "/goal/goal1",
+//         icon: <span style={{ width: 0 }}></span>,
+//         title: "Goal 1",
+//     },
+//     {
+//         href: "/goal/goal2",
+//         icon: <span style={{ width: 0 }}></span>,
+//         title: "Goal 2",
+//     },
+//     {
+//         href: "/goal/goal3",
+//         icon: <span style={{ width: 0 }}></span>,
+//         title: "Goal 3",
+//     },
+//     {
+//         href: "/goal/goal4",
+//         icon: <span style={{ width: 0 }}></span>,
+//         title: "Goal 4",
+//     },
+// ];
 
 interface IProps {
     open: boolean;
@@ -92,6 +92,7 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
     const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
     const { mutate } = useUser();
     const router = useRouter();
+    const { data } = useUser();
 
     // Sign out function from the navbar
     const onSignOut = useCallback(async () => {
@@ -214,14 +215,17 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
                             width: "100%",
                         }}
                     >
-                        {goalItems.map((item) => (
-                            <NavItem
-                                key={item.title}
-                                icon={item.icon}
-                                href={item.href}
-                                title={item.title}
-                            />
-                        ))}
+                        {data?.payload?.goals &&
+                            data?.payload?.goals.map((item) => (
+                                <NavItem
+                                    key={item.goalName}
+                                    icon={<span style={{ width: 0 }}></span>}
+                                    href={`goal/${item.goalName
+                                        .split(" ")
+                                        .join("-")}`}
+                                    title={item.goalName}
+                                />
+                            ))}
                     </Box>
                 </Collapse>
             </Box>

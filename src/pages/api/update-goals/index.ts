@@ -1,67 +1,54 @@
 import nextConnect from "next-connect";
-import auths from "../../../lib/middlewares/auth";
-import { getMongoDb } from "../../../lib/mongodb";
-
-import { findUserByEmail, insertUser } from "../../../lib/queries/user";
-import { type Response } from "../../../types/response";
+import { handleAPIError, handleAPIResponse } from "@/lib/utils";
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { handleAPIError, handleAPIResponse } from "../../../lib/utils";
+import { type Response } from "../../../types/response";
+import { CONFIG as MAIL_CONFIG, sendMail } from "@/lib/mail";
+import { getMongoDb } from "@/lib/mongodb";
 import {
-    type UserModelSchemaType,
-    UserRegistrationSchema,
-    UserModelSchema,
-} from "../../../schema/UserSchema";
+    createToken,
+    findAndDeleteTokenByIdAndType,
+} from "@/lib/queries/token";
+import { updateUserGoals, findUserByEmail } from "@/lib/queries/user";
 
-const handler = nextConnect<
-    NextApiRequest,
-    NextApiResponse<Response<UserModelSchemaType | null>>
->();
+const handler = nextConnect<NextApiRequest, NextApiResponse<Response<null>>>();
 
-handler.post(...auths, async (req, res) => {
+// handler.post(async (req, res) => {
+//   const db = await getMongoDb()
+
+//   const user = await findUserByEmail(db, req.body)
+//   if (!user) {
+//     return handleAPIResponse(res, null, "No user found. Please try again.", 404)
+//   }
+
+//   const token = await createToken(db, {
+//     creatorId: user._id,
+//     type: "passwordReset",
+//     expireAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
+//   })
+
+//   await sendMail({
+//     to: req.body,
+//     from: MAIL_CONFIG.from,
+//     subject: "next-boilerplate: Reset your password.",
+//     html: `
+//       <div>
+//         <p>Hello, ${user.name}</p>
+//         <p>Please follow <a href="${process.env.WEB_URI}/forgot-password/${token.securedTokenId}">this link</a> to reset your password.</p>
+//       </div>
+//       `,
+//   })
+
+//   handleAPIResponse(res, null, "Email has been sent")
+// })
+
+handler.put(async (req, res) => {
     const db = await getMongoDb();
 
-    try {
-        const parsedFormInput = UserRegistrationSchema.safeParse(req.body);
+    console.log("req: ", req.body);
 
-        if (!parsedFormInput.success) {
-            return handleAPIError(res, "Validation error");
-        }
+    await updateUserGoals(db, req.body.user, req.body.goals);
 
-        const { data } = parsedFormInput;
-        const { email, goals } = data;
-
-        if (await findUserByEmail(db, email)) {
-            return handleAPIError(
-                res,
-                "The email you entered is already in use."
-            );
-        }
-
-        const user = await insertUser(db, {
-            email,
-            password,
-            name,
-        });
-
-        const responseData = UserModelSchema.safeParse(user);
-
-        req.logIn(user, (err: string) => {
-            if (!responseData.success) {
-                handleAPIError(res, err);
-                return;
-            }
-
-            if (err) {
-                handleAPIError(res, err);
-                return;
-            }
-
-            handleAPIResponse(res, responseData.data, "User found");
-        });
-    } catch (error) {
-        console.log(error);
-        handleAPIError(res, "error when creating user");
-    }
+    handleAPIResponse(res, null, "Goals have been updated");
 });
 
 export default handler;

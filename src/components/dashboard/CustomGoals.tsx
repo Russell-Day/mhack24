@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     Container,
     Paper,
@@ -8,8 +8,11 @@ import {
     Checkbox,
     FormControlLabel,
     Button,
+    CircularProgress,
+    Alert, // Import Alert for success message
 } from "@mui/material";
 import { fetcher } from "@/lib/fetcher";
+import { useUser } from "@/lib/hooks/useUser";
 
 // Define the goal categories and goals
 const goalCategories = {
@@ -38,8 +41,31 @@ const goalCategories = {
 };
 
 const CustomGoals = () => {
-    // State to store selected goals
+    const { data } = useUser();
+    console.log(data);
+
+    // State to store selected goals and submission status
     const [selectedGoals, setSelectedGoals] = useState<string[]>([]);
+    const [submitted, setSubmitted] = useState(false); // For success message
+    const [loading, setLoading] = useState(false); // For button loading state
+
+    // Populate selected goals from user data
+    useEffect(() => {
+        if (data?.payload?.goals) {
+            const userGoals = data.payload.goals.map(
+                (goal: any) => goal.goalName
+            );
+            setSelectedGoals(userGoals);
+        }
+    }, [data]);
+
+    if (!data?.payload) {
+        return (
+            <Container>
+                <CircularProgress />
+            </Container>
+        );
+    }
 
     // Handler for checking/unchecking a goal
     const handleGoalToggle = (goal: string) => {
@@ -51,24 +77,28 @@ const CustomGoals = () => {
     };
 
     const handleSubmit = async () => {
+        setLoading(true); // Set loading to true
+        console.log(selectedGoals);
         const response = await fetcher("/api/update-goals", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             data: {
-                user: "Benwin",
-                goals: [
-                    {
-                        goalName: "Fat burn", // Goal name must be between 1 and 100 characters
+                user: data?.payload?.name, // Using the user name from payload
+                goals: selectedGoals.map((el) => {
+                    return {
+                        goalName: el, // Goal name must be between 1 and 100 characters
                         progress: 0, // Progress should be between 0 and 100 percent
-                        startDate: new Date(Date.now() + 1000 * 60 * 60 * 24), // Start date as a string (could be ISO date)
+                        startDate: new Date().toISOString(), // ISO string date format
                         endDate: new Date(
-                            Date.now() + 1000 * 60 * 60 * 24 + 10
-                        ),
-                    },
-                ],
+                            Date.now() + 1000 * 60 * 60 * 24 * 7
+                        ).toISOString(), // Example: End date 7 days from now
+                    };
+                }),
             },
         });
         console.log("response: ", response);
+        setLoading(false); // Set loading to false
+        setSubmitted(true); // Show success message
     };
 
     return (
@@ -95,6 +125,13 @@ const CustomGoals = () => {
             >
                 Customize Your Goals
             </Typography>
+
+            {/* Success Message */}
+            {submitted && (
+                <Alert severity="success" sx={{ marginBottom: 3 }}>
+                    Goals submitted successfully!
+                </Alert>
+            )}
 
             <Grid container spacing={3}>
                 {/* Mental Health Section */}
@@ -218,8 +255,9 @@ const CustomGoals = () => {
                     variant="contained"
                     color="primary"
                     onClick={handleSubmit}
+                    disabled={loading} // Disable button while loading
                 >
-                    Submit Goals
+                    {loading ? <CircularProgress size={24} /> : "Submit Goals"}
                 </Button>
             </Box>
         </Box>
