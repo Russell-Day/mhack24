@@ -6,6 +6,7 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 import LocalActivityIcon from "@mui/icons-material/LocalActivity";
 import SupportIcon from "@mui/icons-material/Support";
+import SmartToyIcon from "@mui/icons-material/SmartToy"; // Using SmartToy icon for BeeFriend
 
 const AboutUs = () => {
     return (
@@ -132,6 +133,8 @@ const AboutUs = () => {
                         >
                             Our Key Features:
                         </Typography>
+
+                        {/* Feature 1: Partner Matching */}
                         <Box
                             sx={{
                                 display: "flex",
@@ -156,6 +159,85 @@ const AboutUs = () => {
                                 partnership.
                             </Typography>
                         </Box>
+
+                        {/* Feature 2: Goal Setting */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                mb: 2,
+                            }}
+                        >
+                            <SupportIcon
+                                sx={{
+                                    fontSize: 40,
+                                    color: "#007BFF",
+                                    marginRight: 2,
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                sx={{ color: "#666666", fontSize: 16 }}
+                            >
+                                2. <strong>Goal Setting:</strong> The platform
+                                offers structured goal-setting tools for weight
+                                loss, fitness, diet, mental health, and more.
+                            </Typography>
+                        </Box>
+
+                        {/* Feature 3: Progress Tracking */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                mb: 2,
+                            }}
+                        >
+                            <LocalActivityIcon
+                                sx={{
+                                    fontSize: 40,
+                                    color: "#007BFF",
+                                    marginRight: 2,
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                sx={{ color: "#666666", fontSize: 16 }}
+                            >
+                                3. <strong>Progress Tracking:</strong> Both
+                                partners can monitor their progress through
+                                personalized daily tasks.
+                            </Typography>
+                        </Box>
+
+                        {/* Feature 4: BeeFriend AI */}
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                mb: 2,
+                            }}
+                        >
+                            <SmartToyIcon
+                                sx={{
+                                    fontSize: 40,
+                                    color: "#007BFF",
+                                    marginRight: 2,
+                                }}
+                            />
+                            <Typography
+                                variant="body1"
+                                sx={{ color: "#666666", fontSize: 16 }}
+                            >
+                                4. <strong>BeeFriend AI:</strong> Your friendly
+                                AI companion will accompany you along your
+                                health journey, offering personalized tips,
+                                motivational support, and even reminders to keep
+                                you on track.
+                            </Typography>
+                        </Box>
+
+                        {/* Feature 5: Motivation & Support */}
                         <Box
                             sx={{
                                 display: "flex",
@@ -174,58 +256,14 @@ const AboutUs = () => {
                                 variant="body1"
                                 sx={{ color: "#666666", fontSize: 16 }}
                             >
-                                2. <strong>Goal Setting:</strong> The platform
-                                offers structured goal-setting tools for weight
-                                loss, fitness, diet, mental health, and more.
-                            </Typography>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                mb: 2,
-                            }}
-                        >
-                            <LocalActivityIcon
-                                sx={{
-                                    fontSize: 40,
-                                    color: "#007BFF", // Keeping the color scheme unified
-                                    marginRight: 2,
-                                }}
-                            />
-                            <Typography
-                                variant="body1"
-                                sx={{ color: "#666666", fontSize: 16 }}
-                            >
-                                3. <strong>Progress Tracking:</strong> Both
-                                partners can monitor their progress through
-                                personalized daily tasks.
-                            </Typography>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                mb: 2,
-                            }}
-                        >
-                            <SupportIcon
-                                sx={{
-                                    fontSize: 40,
-                                    color: "#007BFF", // Unified colors across the section
-                                    marginRight: 2,
-                                }}
-                            />
-                            <Typography
-                                variant="body1"
-                                sx={{ color: "#666666", fontSize: 16 }}
-                            >
-                                4. <strong>Motivation & Support:</strong>{" "}
+                                5. <strong>Motivation & Support:</strong>{" "}
                                 Regular reminders and motivational messages keep
                                 users engaged and committed to their health
                                 journey.
                             </Typography>
                         </Box>
+
+                        {/* Feature 6: Reward System */}
                         <Box
                             sx={{
                                 display: "flex",
@@ -235,7 +273,7 @@ const AboutUs = () => {
                             <LocalActivityIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#007BFF", // Final icon matches the palette
+                                    color: "#007BFF",
                                     marginRight: 2,
                                 }}
                             />
@@ -243,7 +281,7 @@ const AboutUs = () => {
                                 variant="body1"
                                 sx={{ color: "#666666", fontSize: 16 }}
                             >
-                                5. <strong>Reward System:</strong> A fun goal as
+                                6. <strong>Reward System:</strong> A fun goal as
                                 you become healthier: growing your own tree!
                                 Pick a seed and grow it as you finish daily
                                 tasks for your goal(s).

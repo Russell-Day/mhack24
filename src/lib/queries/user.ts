@@ -239,3 +239,16 @@ export const getAllUsers = async (db: Db, userName: string) => {
         throw new Error("Could not find matching users");
     }
 };
+export const updateTasks = async (
+    db: Db,
+    id: string,
+    goals: Partial<UserModelSchemaType>
+) => {
+    try {
+        await db
+            .collection("users")
+            .updateOne({ name: id }, { $set: { goals } });
+    } catch (e) {
+        console.log("error: ", e);
+    }
+};

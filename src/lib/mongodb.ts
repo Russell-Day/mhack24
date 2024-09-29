@@ -5,7 +5,7 @@ if (!process.env.MONGODB_URI) {
 }
 
 // const uri = process.env.MONGODB_URI;
-const uri = "mongodb+srv://test:test@cluster0.tj1qz.mongodb.net/";
+const uri = "mongodb+srv://test:test@cluster0.w7sbe.mongodb.net/";
 const options = {};
 
 let indexesCreated = false;

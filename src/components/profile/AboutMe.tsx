@@ -6,7 +6,7 @@ import {
     CardHeader,
     Divider,
     TextField,
-    Typography, //for the box to display information
+    Typography,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import { Status } from "@/types/status";
@@ -17,10 +17,6 @@ import SubmitButton from "../common/SubmitButton";
 import { UserModelSchema, UserModelSchemaType } from "@/schema/UserSchema";
 import { useUser } from "@/lib/hooks/useUser";
 import { fetcher } from "@/lib/fetcher";
-
-const initialValues = {
-    about: "",
-};
 
 const AboutMe = () => {
     const [status, setStatus] = useState<Status>("idle");
@@ -51,7 +47,6 @@ const AboutMe = () => {
             setStatus("success");
             setSubmittedAbout(responseData.payload?.about || ""); // Save the submitted info to display
             formik.resetForm({ values: { about: "" } }); // Clear the form
-            setStatus("success");
         }
     };
 
@@ -70,24 +65,37 @@ const AboutMe = () => {
     }, [data?.payload]);
 
     return (
-        <>
-            <CardContent title="Profile Information" />
-            <Divider />
-            <CardContent>
-                <Typography variant="h5" gutterBottom>
-                    {data?.payload?.name || "User"}
-                </Typography>
-                <Typography variant="body1">
-                    {submittedAbout || "No infromation available"}
-                </Typography>
-            </CardContent>
-            <Divider />
+        <Box sx={styles.container}>
+            {/* Display Profile Information */}
+            <Card sx={styles.profileCard}>
+                <CardHeader
+                    titleTypographyProps={{
+                        variant: "h6",
+                        color: "textPrimary",
+                    }}
+                    subheaderTypographyProps={{ color: "textSecondary" }}
+                    title="Profile Information"
+                    sx={styles.header}
+                />
+                <Divider />
+                <CardContent>
+                    <Typography variant="h5" sx={styles.nameText}>
+                        {data?.payload?.name || "User"}
+                    </Typography>
+                    <Typography variant="body1" sx={styles.aboutText}>
+                        {submittedAbout || "No information available"}
+                    </Typography>
+                </CardContent>
+                <Divider />
+            </Card>
 
+            {/* Form to Update Profile Info */}
             <form onSubmit={formik.handleSubmit}>
-                <Card>
+                <Card sx={styles.formCard}>
                     <CardHeader
                         subheader="Update your info and tell us about yourself"
-                        title="Profile information"
+                        title="Update Information"
+                        sx={styles.header}
                     />
                     <CardContent>
                         <TextField
@@ -102,7 +110,7 @@ const AboutMe = () => {
                             value={formik.values.about}
                             type="text"
                             variant="outlined"
-                            placeholder=""
+                            placeholder="Write something about yourself..."
                             helperText={
                                 (formik.touched.about && formik.errors.about) ||
                                 " "
@@ -110,23 +118,17 @@ const AboutMe = () => {
                             error={Boolean(
                                 formik.touched.about && formik.errors.about
                             )}
+                            sx={styles.textField}
                         />
                     </CardContent>
                     <Divider />
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            p: 2,
-                            float: "right",
-                        }}
-                    >
+                    <Box sx={styles.submitContainer}>
                         <SubmitButton
                             customStyle={{ margin: 1 }}
-                            color="success"
+                            color="primary"
                             fullWidth={false}
                             size={"medium"}
-                            text="Update information"
+                            text="Update Information"
                             isLoading={status === "loading"}
                             isDisabled={
                                 !formik.isValid ||
@@ -137,8 +139,51 @@ const AboutMe = () => {
                     </Box>
                 </Card>
             </form>
-        </>
+        </Box>
     );
+};
+
+// Inline styles for the modernized UI
+const styles = {
+    container: {
+        display: "flex",
+        flexDirection: "column" as const,
+        gap: 3,
+        padding: 3,
+        maxWidth: "800px",
+        margin: "0 auto",
+    },
+    profileCard: {
+        borderRadius: "20px",
+        padding: "20px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        backgroundColor: "#F9F9F9",
+        marginBottom: "20px",
+    },
+    formCard: {
+        borderRadius: "20px",
+        padding: "20px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+        backgroundColor: "#F9F9F9",
+    },
+    header: {
+        paddingBottom: "10px",
+    },
+    nameText: {
+        fontWeight: "bold" as const,
+    },
+    aboutText: {
+        color: "#555",
+        marginTop: "10px",
+    },
+    textField: {
+        marginTop: "15px",
+    },
+    submitContainer: {
+        display: "flex",
+        justifyContent: "flex-end" as const,
+        padding: "20px",
+    },
 };
 
 export default AboutMe;

@@ -6,6 +6,8 @@ import { useUser } from "@/lib/hooks/useUser";
 import { fetcher } from "@/lib/fetcher";
 
 const GoalPage = () => {
+    const { data: userData } = useUser();
+
     const router = useRouter();
     const { goal } = router.query; // Get the goal name from the route
     const [allUsers, setAllUsers] = useState([]);
@@ -16,7 +18,7 @@ const GoalPage = () => {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 data: {
-                    user: "Ben Jadhav", // Using the user name from payload
+                    user: userData?.payload?.name, // Using the user name from payload
                 },
             });
 
@@ -27,42 +29,41 @@ const GoalPage = () => {
     console.log("allUsers:", allUsers);
     const { data } = useUser();
     console.log(data);
-    const matchedUsers = [
-        {
-            name: "Person 1",
-            email: "person1@gmail.com",
-            goals: [],
-            _id: "66f904fd7476b35f343cecff",
-            about: "About Person 1",
-            emailVerified: false,
-            createdAt: "2024-09-29T07:41:38.077Z",
-        },
-        {
-            name: "Person 2",
-            email: "person2@gmail.com",
-            goals: [],
-            _id: "66f904fd7476b35f343cecff",
-            about: "About Person 2",
-            emailVerified: false,
-            createdAt: "2024-09-29T07:41:38.077Z",
-        },
-        {
-            name: "Person 3",
-            email: "person3@gmail.com",
-            goals: [],
-            _id: "66f904fd7476b35f343cecff",
-            about: "About Person 3",
-            emailVerified: false,
-            createdAt: "2024-09-29T07:41:38.077Z",
-        },
-    ];
 
-    const [tasks, setTasks] = useState([
-        { name: "Task 1", isCompleted: false },
-        { name: "Task 2", isCompleted: false },
-        { name: "Task 3", isCompleted: false },
-    ]);
+    // const [tasks, setTasks] = useState({}
+    //     [
+    //         { name: "5-Minute Mindful Breathing", isCompleted: false },
+    //         { name: "10-Minute Bodyweight Circuit", isCompleted: false },
+    //         { name: "Task 3", isCompleted: false },
+    //     ],
+    //     [
+    //         { name: "5-Minute Mindful Breathing", isCompleted: false },
+    //         { name: "10-Minute Bodyweight Circuit", isCompleted: false },
+    //         { name: "Task 3", isCompleted: false },
+    //     ]
+    // );
+    const [tasks, setTasks] = useState([{ name: "", isCompleted: false }]);
     const [newTask, setNewTask] = useState("");
+
+    useEffect(() => {
+        console.log("tasks:", goal);
+        if (goal == "Meditation") {
+            setTasks([
+                { name: "5-Minute Mindful Breathing", isCompleted: true },
+                { name: "10-Minute Bodyweight Circuit", isCompleted: false },
+            ]);
+        } else if (goal == "Weight Loss") {
+            setTasks([
+                { name: "Exercise for 30 minutes", isCompleted: false },
+                { name: "Drink 2 liters of water", isCompleted: false },
+            ]);
+        } else if (goal == "Build New Friendships") {
+            setTasks([
+                { name: "Join a new club", isCompleted: false },
+                { name: "Attend a networking event", isCompleted: false },
+            ]);
+        }
+    }, [goal, setTasks]);
 
     const handleAddTask = () => {
         if (newTask.trim() !== "") {

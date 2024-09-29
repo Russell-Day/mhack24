@@ -21,14 +21,24 @@ const ChatBot: React.FC = () => {
 
     // Function to generate a system prompt with user's goals
     const generateSystemPrompt = () => {
-        if (!data?.payload?.goals) {
-            return "You are chatting with a friendly assistant to help with your goals.";
+        if (!data?.payload?.goals && !data?.payload?.about) {
+            return "You are BeeFriend act NOT as an assistant, but as pet or friend! A cute bee that helps the user's health and wellness journey. Talk in a friendly, younger, and cute manner. Keep your answers concise and not superfluous, act as if you are texting with a friend";
+        } else if (!data?.payload?.goals) {
+            const about = data?.payload?.about;
+            return `You are BeeFriend act NOT as an assistant, but as pet or friend! A cute bee that helps the user's health and wellness journey. The user has not set any goals yet. This is a little more about them: ${about}. Talk in a friendly, younger, and cute manner. Keep your answers concise and not superfluous, act as if you are texting with a friend.`;
+        } else if (!data?.payload?.about) {
+            const userGoals = data.payload.goals.map(
+                (goal: any) => goal.goalName
+            );
+            return `You are BeeFriend act NOT as an assistant, but as pet or friend! A cute bee that helps the user's health and wellness journey. The user is working on the following goals: ${userGoals.join(
+                ", "
+            )}. Talk in a friendly, younger, and cute manner. Keep your answers concise and not superfluous, act as if you are texting with a friend.`;
         }
-
         const userGoals = data.payload.goals.map((goal: any) => goal.goalName);
-        return `You are a friendly assistant for the user's health and wellness journey. The user is working on the following goals: ${userGoals.join(
+        const about = data.payload.about;
+        return `You are BeeFriend act NOT as an assistant, but as pet or friend! A cute bee that helps the user's health and wellness journey. The user is working on the following goals: ${userGoals.join(
             ", "
-        )}. Please provide supportive, helpful, and motivational advice. Keep your answers conscise and not superfluous, act as if you are texting with a friend`;
+        )}. This is a little more about the user: ${about}. Talk in a friendly, younger, and cute manner. Keep your answers concise and not superfluous, act as if you are texting with a friend.`;
     };
 
     // Function to send a message using Groq SDK
@@ -84,8 +94,16 @@ const ChatBot: React.FC = () => {
 
     return (
         <div style={styles.chatContainer}>
-            <h2 style={styles.header}>BotFriend Chat</h2>
-
+            <div style={styles.headerContainer}>
+                <img
+                    src={process.env.NEXT_PUBLIC_BEE} // Correct path to the image
+                    alt="bee"
+                    width={40}
+                    height={40}
+                    style={{ borderRadius: "5px" }}
+                />
+                <h2 style={styles.header}>BeeFriend Chat</h2>
+            </div>
             <div style={styles.chatBox}>
                 {/* Display all messages in chat bubbles */}
                 {messages.map((msg, index) => (
@@ -97,14 +115,13 @@ const ChatBot: React.FC = () => {
                                 : styles.botMessage
                         }
                     >
-                        <strong>{msg.role === "user" ? "You" : "Bot"}:</strong>{" "}
-                        {msg.content}
+                        <span>{msg.content}</span>
                     </div>
                 ))}
                 {/* Loader for bot thinking */}
                 {isLoading && (
                     <div style={styles.botMessage}>
-                        <strong>Bot:</strong> Bot is thinking...
+                        <span>Bot is thinking...</span>
                     </div>
                 )}
             </div>
@@ -117,7 +134,7 @@ const ChatBot: React.FC = () => {
                     value={userMessage}
                     onChange={(e) => setUserMessage(e.target.value)}
                     onKeyDown={handleKeyPress} // Add keydown listener for "Enter" key
-                    placeholder="Ask the bot something..."
+                    placeholder="Ask BeeFriend something..."
                 />
                 <button
                     style={
@@ -135,70 +152,89 @@ const ChatBot: React.FC = () => {
     );
 };
 
-// Inline styles object
+// Inline styles object to resemble Apple Messenger
 const styles = {
     chatContainer: {
         width: "100%",
         maxWidth: "600px",
         margin: "20px auto",
-        padding: "20px",
-        border: "1px solid #ccc",
-        borderRadius: "10px",
+        padding: "10px",
         backgroundColor: "#ffffff",
+        display: "flex",
+        flexDirection: "column" as const,
+        borderRadius: "20px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
     },
+    headerContainer: {
+        display: "flex", // Align header and image horizontally
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+        padding: "10px",
+        borderBottom: "1px solid #ddd",
+    },
     header: {
-        fontSize: "24px",
-        marginBottom: "20px",
+        fontSize: "20px",
         textAlign: "center" as const,
     },
     chatBox: {
         maxHeight: "400px",
         overflowY: "auto" as const,
-        marginBottom: "20px",
         padding: "10px",
         backgroundColor: "#f4f6f8",
-        borderRadius: "10px",
+        borderRadius: "20px",
+        marginBottom: "10px",
+        display: "flex",
+        flexDirection: "column" as const,
     },
     userMessage: {
-        backgroundColor: "#e1f5fe",
-        padding: "10px",
-        borderRadius: "10px",
-        margin: "10px 0",
-        textAlign: "right" as const,
+        backgroundColor: "#007AFF", // iMessage blue bubble
+        color: "#fff",
+        padding: "10px 15px",
+        borderRadius: "20px",
+        margin: "5px 0",
+        alignSelf: "flex-end" as const,
         maxWidth: "80%",
-        marginLeft: "auto" as const,
+        fontSize: "16px",
+        wordBreak: "break-word" as const,
     },
     botMessage: {
-        backgroundColor: "#e8f5e9",
-        padding: "10px",
-        borderRadius: "10px",
-        margin: "10px 0",
-        textAlign: "left" as const,
+        backgroundColor: "#E5E5EA", // iMessage light gray bubble
+        color: "#000",
+        padding: "10px 15px",
+        borderRadius: "20px",
+        margin: "5px 0",
+        alignSelf: "flex-start" as const,
         maxWidth: "80%",
+        fontSize: "16px",
+        wordBreak: "break-word" as const,
     },
     inputArea: {
         display: "flex",
-        justifyContent: "center" as const,
         alignItems: "center" as const,
-        gap: "10px",
+        padding: "10px",
+        backgroundColor: "#f4f6f8",
+        borderRadius: "20px",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     },
     input: {
         flex: 1,
         padding: "10px",
-        borderRadius: "5px",
-        border: "1px solid #ccc",
-        width: "70%",
+        borderRadius: "20px",
+        border: "1px solid #ddd",
+        marginRight: "10px",
         fontSize: "16px",
+        outline: "none",
     },
     button: {
         padding: "10px 20px",
-        backgroundColor: "#007BFF",
-        color: "white",
+        backgroundColor: "#007AFF",
+        color: "#fff",
         border: "none",
-        borderRadius: "5px",
+        borderRadius: "20px",
         cursor: "pointer",
         fontSize: "16px",
+        outline: "none",
     },
     disabledButton: {
         backgroundColor: "#ccc",

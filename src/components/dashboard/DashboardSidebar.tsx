@@ -55,7 +55,7 @@ const items: SidebarNavItems[] = [
     {
         href: "/Botfriend",
         icon: <SmartToy fontSize="small" />,
-        title: "BotFriend",
+        title: "BeeFriend",
     },
 ];
 
@@ -268,7 +268,7 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
             PaperProps={{
                 sx: {
                     backgroundColor: "#757575", // Background to match the mockup
-                    width: drawerWidth,
+                    width: 250,
                     color: "#fff",
                     borderTopRightRadius: 10,
                     borderBottomRightRadius: 10,
