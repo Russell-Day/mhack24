@@ -166,7 +166,7 @@ const Register = () => {
                         />
                         <TextField
                             fullWidth
-                            label="Username"
+                            label="Email"
                             margin="normal"
                             name="email"
                             onBlur={formik.handleBlur}
@@ -174,7 +174,7 @@ const Register = () => {
                             value={formik.values.email}
                             type="email"
                             variant="outlined"
-                            placeholder="Enter your username"
+                            placeholder="Enter your email"
                             error={Boolean(
                                 formik.touched.email && formik.errors.email
                             )}

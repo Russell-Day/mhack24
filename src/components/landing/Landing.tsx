@@ -1,81 +1,72 @@
-import React from "react"
-import Navbar from "./Navbar"
-import Scroll from "react-scroll"
-import Link from "next/link"
-import { Box, Button, Container, Typography } from "@mui/material"
-import Features from "./Features"
+import React from "react";
+import Navbar from "./Navbar";
+import { Box, Container, Typography } from "@mui/material";
+import Image from "next/image"; // Using Next.js Image component for better optimization
+import Scroll from "react-scroll";
+import Link from "next/link";
+import Features from "./Features";
+import About from "./About2";
 
-//  todo, update the links.
+// Import the sprout image
+import sproutImage from "../../../public/assets/images/feature-8.png"; // Adjust the path if necessary
 
 const Landing = () => {
-  const Element = Scroll.Element
-  return (
-    <>
-      <Navbar />
-      <Container sx={{ paddingTop: 20 }}>
-        <Box
-          sx={{
-            textAlign: "center",
-            mb: 5,
-          }}
-        >
-          <Typography sx={{ fontSize: 64 }}>
-            Accelerate Your Development with this <span style={{ color: "#7c4dff" }}>Next.js</span> Boilerplate
-          </Typography>
-          <Box>
-            <Box>
-              <Typography sx={{ fontSize: 34, marginBottom: 5, marginTop: 10 }}>
-                Ready to start your next project? Clone the repo or watch the tutorial to begin.
-              </Typography>
-              <Box>
-                <Link
-                  style={{ textDecoration: "none", margin: 5 }}
-                  href="https://github.com/Mumma6/next-boilerplate"
-                  passHref
-                >
-                  <Button
-                    sx={{
-                      fontSize: 30,
-                    }}
-                    size="large"
-                    color="secondary"
-                    variant="contained"
-                  >
-                    Github Repo
-                  </Button>
-                </Link>
-                <Link
-                  style={{ textDecoration: "none", margin: 5 }}
-                  href="https://dev.to/martinpersson/nextjs-auth-and-dashboard-boilerplate-building-a-full-stack-web-app-59g"
-                  passHref
-                >
-                  <Button
-                    sx={{
-                      fontSize: 30,
-                    }}
-                    size="large"
-                    color="primary"
-                    variant="contained"
-                  >
-                    Tutorial
-                  </Button>
-                </Link>
-              </Box>
-            </Box>
-            <Box>
-              <Typography sx={{ fontSize: 34, marginTop: 10 }}>
-                Crafted with industry-leading technologies, this boilerplate equips you with everything needed for efficient,
-                modern web development.
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      </Container>
-      <Element name="features">
-        <Features />
-      </Element>
-    </>
-  )
-}
+    const Element = Scroll.Element;
 
-export default Landing
+    return (
+        <>
+            <Navbar />
+            <Container sx={{ paddingTop: 20 }}>
+                <Box
+                    sx={{
+                        textAlign: "center",
+                        mb: 5,
+                        color: "#fff", // White color for the text
+                        backgroundColor: "#000", // Dark background to match the mockup
+                        padding: 5,
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", // Soft shadow for depth
+                    }}
+                >
+                    {/* Image and Title */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                        }}
+                    >
+                        <Image
+                            src={sproutImage}
+                            alt="Sprout"
+                            width={100}
+                            height={100}
+                        />
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                fontFamily: "Arial, sans-serif",
+                                fontWeight: "bold",
+                                mt: 2,
+                            }}
+                        >
+                            DuoHealth
+                        </Typography>
+                    </Box>
+                    {/* Subtitle */}
+                    <Typography
+                        variant="h5"
+                        sx={{ fontFamily: "Arial, sans-serif", mt: 1 }}
+                    >
+                        Two Paths, One Goal: Partner Up for Better Health!
+                    </Typography>
+                </Box>
+            </Container>
+            <Element name="features">
+                <About />
+            </Element>
+        </>
+    );
+};
+
+export default Landing;

@@ -1,8 +1,9 @@
-import React, { useCallback, type ReactElement } from "react";
+import React, { useState, useCallback, type ReactElement } from "react";
 import {
     Box,
     Button,
     Divider,
+    Collapse,
     Drawer,
     IconButton,
     useMediaQuery,
@@ -11,9 +12,12 @@ import {
 import { useTheme } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
+import CreateIcon from "@mui/icons-material/Create";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import { SmartToy } from "@mui/icons-material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Flag from "@mui/icons-material/Flag";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useUser } from "@/lib/hooks/useUser";
@@ -39,9 +43,42 @@ const items: SidebarNavItems[] = [
         title: "Profile",
     },
     {
+        href: "/personalize",
+        icon: <CreateIcon fontSize="small" />,
+        title: "Personalize",
+    },
+    {
         href: "/settings",
         icon: <SettingsIcon fontSize="small" />,
         title: "Settings",
+    },
+    {
+        href: "/Botfriend",
+        icon: <SmartToy fontSize="small" />,
+        title: "BotFriend",
+    },
+];
+
+const goalItems: SidebarNavItems[] = [
+    {
+        href: "/goal/goal1",
+        icon: <span style={{ width: 0 }}></span>,
+        title: "Goal 1",
+    },
+    {
+        href: "/goal/goal2",
+        icon: <span style={{ width: 0 }}></span>,
+        title: "Goal 2",
+    },
+    {
+        href: "/goal/goal3",
+        icon: <span style={{ width: 0 }}></span>,
+        title: "Goal 3",
+    },
+    {
+        href: "/goal/goal4",
+        icon: <span style={{ width: 0 }}></span>,
+        title: "Goal 4",
     },
 ];
 
@@ -74,6 +111,13 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
     }, [mutate, router]);
 
     const drawerWidth = 200; // Define width for easier customization
+
+    // State to manage the dropdown visibility
+    const [isGoalsDropdownOpen, setIsGoalsDropdownOpen] = useState(false);
+
+    const toggleGoalsDropdown = () => {
+        setIsGoalsDropdownOpen((prev) => !prev);
+    };
 
     const content = (
         <Box
@@ -126,6 +170,60 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
                         title={item.title}
                     />
                 ))}
+            </Box>
+
+            {/*Dropdown box for Goal 1, Goal 2, Goal 3, Goal 4*/}
+            {/* Dropdown Menu for Goals */}
+            <Box
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    padding: 2,
+                    borderTop: "1px solid rgba(255, 255, 255, 0.2)",
+                }}
+            >
+                <Button
+                    onClick={toggleGoalsDropdown}
+                    startIcon={<Flag fontSize="small" />}
+                    sx={{
+                        color: "#fff",
+                        textTransform: "none",
+                        justifyContent: "flex-start",
+                        width: "100%",
+                        "&:hover": {
+                            backgroundColor: "rgba(255, 255, 255, 0.1)",
+                        },
+                    }}
+                >
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                        Goals
+                    </Typography>
+                </Button>
+                {/* Dropdown Content */}
+                <Collapse in={isGoalsDropdownOpen}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "flex-start",
+                            paddingLeft: 1,
+                            paddingTop: 1,
+                            paddingBottom: 1,
+                            borderLeft: "1px solid rgba(255, 255, 255, 0.2)",
+                            width: "100%",
+                        }}
+                    >
+                        {goalItems.map((item) => (
+                            <NavItem
+                                key={item.title}
+                                icon={item.icon}
+                                href={item.href}
+                                title={item.title}
+                            />
+                        ))}
+                    </Box>
+                </Collapse>
             </Box>
 
             {/* Sign Out Button */}

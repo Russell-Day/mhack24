@@ -1,15 +1,15 @@
 import React from "react";
 import { DashboardLayout } from "../components/dashboard/DashboardLayout";
-import Settings from "@/components/settings/Settings";
+import Chatbot from "@/components/BotFriend/Chatbot";
 
-const SettingPage = () => {
+const Chatbotpage = () => {
     return (
         <>
             <DashboardLayout>
-                <Settings />
+                <Chatbot />
             </DashboardLayout>
         </>
     );
 };
 
-export default SettingPage;
+export default Chatbotpage;
