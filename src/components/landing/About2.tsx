@@ -12,9 +12,9 @@ const AboutUs = () => {
         <Box
             sx={{
                 padding: 5,
-                backgroundColor: "#f9f9f9", // Light background
+                backgroundColor: "#FDFBF8", // Off-White background for warmth
                 borderRadius: 2,
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)", // Soft shadow
+                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)", // Soft shadow for modern depth
                 marginTop: 5,
             }}
         >
@@ -25,7 +25,7 @@ const AboutUs = () => {
                         fontWeight: "bold",
                         textAlign: "center",
                         mb: 3,
-                        color: "#333",
+                        color: "#333333", // Cool Gray for title
                     }}
                 >
                     About Us
@@ -36,21 +36,22 @@ const AboutUs = () => {
                         fontSize: 18,
                         textAlign: "center",
                         mb: 5,
-                        color: "#666",
+                        color: "#666666", // Light Gray for body text
                     }}
                 >
                     We believe accountability and friendships are essential in
                     your health journey, whether that’s mental health, physical
                     health, or lifestyle improvement!
                 </Typography>
+
                 <Grid container spacing={4}>
-                    {/* Why DuoHealth Section */}
+                    {/* Why HealthHive Section */}
                     <Grid item xs={12} md={4}>
                         <Typography
                             variant="h5"
-                            sx={{ fontWeight: "bold", mb: 2, color: "#333" }}
+                            sx={{ fontWeight: "bold", mb: 2, color: "#333333" }} // Cool Gray for subtitles
                         >
-                            Why DuoHealth?
+                            Why HealthHive?
                         </Typography>
                         <Box
                             sx={{
@@ -62,13 +63,13 @@ const AboutUs = () => {
                             <PeopleIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#4caf50", // Green color for icon
+                                    color: "#007BFF", // Electric Blue for icons
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }} // Light Gray for text
                             >
                                 Accountability: Having a partner increases
                                 accountability and makes it more likely for
@@ -85,13 +86,13 @@ const AboutUs = () => {
                             <GroupAddIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#2196f3", // Blue color for icon
+                                    color: "#007BFF", // Electric Blue for consistency
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 Social Connection: It provides a sense of
                                 friendship and shared purpose, reducing feelings
@@ -107,13 +108,13 @@ const AboutUs = () => {
                             <FitnessCenterIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#f44336", // Red color for icon
+                                    color: "#007BFF", // Electric Blue for all icons
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 Flexible & Inclusive: Suitable for all fitness
                                 levels and health goals, whether users are
@@ -127,7 +128,7 @@ const AboutUs = () => {
                     <Grid item xs={12} md={8}>
                         <Typography
                             variant="h5"
-                            sx={{ fontWeight: "bold", mb: 2, color: "#333" }}
+                            sx={{ fontWeight: "bold", mb: 2, color: "#333333" }}
                         >
                             Our Key Features:
                         </Typography>
@@ -141,13 +142,13 @@ const AboutUs = () => {
                             <TrackChangesIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#ff9800", // Orange color for icon
+                                    color: "#007BFF", // Unified color for icons
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 1. <strong>Partner Matching:</strong> Users are
                                 paired based on their health goals and
@@ -165,13 +166,13 @@ const AboutUs = () => {
                             <SupportIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#673ab7", // Purple color for icon
+                                    color: "#007BFF", // Consistent Electric Blue for icons
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 2. <strong>Goal Setting:</strong> The platform
                                 offers structured goal-setting tools for weight
@@ -188,13 +189,13 @@ const AboutUs = () => {
                             <LocalActivityIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#ff5722", // Deep Orange color for icon
+                                    color: "#007BFF", // Keeping the color scheme unified
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 3. <strong>Progress Tracking:</strong> Both
                                 partners can monitor their progress through
@@ -211,13 +212,13 @@ const AboutUs = () => {
                             <SupportIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#607d8b", // Blue Grey color for icon
+                                    color: "#007BFF", // Unified colors across the section
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 4. <strong>Motivation & Support:</strong>{" "}
                                 Regular reminders and motivational messages keep
@@ -234,13 +235,13 @@ const AboutUs = () => {
                             <LocalActivityIcon
                                 sx={{
                                     fontSize: 40,
-                                    color: "#009688", // Teal color for icon
+                                    color: "#007BFF", // Final icon matches the palette
                                     marginRight: 2,
                                 }}
                             />
                             <Typography
                                 variant="body1"
-                                sx={{ color: "#666", fontSize: 16 }}
+                                sx={{ color: "#666666", fontSize: 16 }}
                             >
                                 5. <strong>Reward System:</strong> A fun goal as
                                 you become healthier: growing your own tree!

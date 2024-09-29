@@ -5,6 +5,19 @@ import {
     type UserModelSchemaType,
 } from "../../schema/UserSchema";
 
+interface Task {
+    name: string;
+    isCompleted: boolean;
+}
+
+interface Goal {
+    goalName: string;
+    progress: number;
+    startDate: string;
+    endDate: string;
+    tasks: Task[];
+}
+
 export const findUserForAuth = async (db: Db, userId: string) => {
     const user = await db
         .collection("users")
@@ -140,5 +153,89 @@ export const updateUserGoals = async (
             .updateOne({ name: id }, { $set: { goals } });
     } catch (e) {
         console.log("error: ", e);
+    }
+};
+
+export const updateGoalProgress = async (
+    db: Db,
+    userId: ObjectId
+): Promise<boolean> => {
+    try {
+        const user = await db.collection("users").findOne({ _id: userId });
+        if (!user || !user.goals) {
+            console.error("No user found or user has no goals.");
+            return false; // No user or no goals to update
+        }
+
+        for (const goal of user.goals as Goal[]) {
+            const tasksCompleted = goal.tasks.filter(
+                (task) => task.isCompleted
+            ).length;
+            const totalTasks = goal.tasks.length;
+            const progressPercentage = (tasksCompleted / totalTasks) * 100;
+
+            const result = await db
+                .collection("users")
+                .updateOne(
+                    { _id: userId, "goals.goalName": goal.goalName },
+                    { $set: { "goals.$.progress": progressPercentage } }
+                );
+
+            // Check result to ensure the document was updated
+            if (!result.acknowledged || result.modifiedCount !== 1) {
+                console.error(
+                    `Failed to update progress for goal: ${goal.goalName}`
+                );
+                return false;
+            }
+        }
+
+        return true; // Successfully updated all goals
+    } catch (error) {
+        console.error("Failed to update goal progress:", error);
+        return false;
+    }
+};
+
+export const getMatchingUsersByGoals = async (
+    db: Db,
+    userName: string,
+    userGoals: Array<{ goalName: string }>
+) => {
+    try {
+        // Extract goal names from the user's goals
+        const goalNames = userGoals.map((goal) => goal.goalName);
+
+        // Query the database to find users with matching goal names
+        const matchingUsers = await db
+            .collection("users")
+            .find({
+                name: { $ne: userName }, // Exclude the current user
+                "goals.goalName": { $in: goalNames }, // Match users with similar goals
+            })
+            .toArray();
+
+        console.log("matchingUsers: ", matchingUsers);
+
+        return matchingUsers;
+    } catch (e) {
+        console.log("Error finding matching users: ", e);
+        throw new Error("Could not find matching users");
+    }
+};
+
+export const getAllUsers = async (db: Db, userName: string) => {
+    try {
+        const users = await db
+            .collection("users")
+            .find({ name: { $ne: userName } }) // Exclude users with the specified username
+            .toArray(); // Convert the cursor to an array
+
+        console.log("users: ", users);
+
+        return users;
+    } catch (e) {
+        console.log("Error finding matching users: ", e);
+        throw new Error("Could not find matching users");
     }
 };

@@ -1,146 +1,80 @@
 import { useRouter } from "next/router";
-import React from "react";
-import { Box, Typography, Paper, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Paper, Grid, TextField, Button } from "@mui/material";
 import { DashboardLayout } from "../../components/dashboard/DashboardLayout";
 import { useUser } from "@/lib/hooks/useUser";
+import { fetcher } from "@/lib/fetcher";
 
 const GoalPage = () => {
     const router = useRouter();
     const { goal } = router.query; // Get the goal name from the route
+    const [allUsers, setAllUsers] = useState([]);
 
+    useEffect(() => {
+        (async () => {
+            const users: any = await fetcher("/api/get-users", {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                data: {
+                    user: "Ben Jadhav", // Using the user name from payload
+                },
+            });
+
+            users && setAllUsers(users.payload);
+        })();
+    }, []);
+
+    console.log("allUsers:", allUsers);
     const { data } = useUser();
     console.log(data);
     const matchedUsers = [
         {
-            name: "person 1",
-            email: "npm@gmail.com",
-            goals: [
-                {
-                    goalName: "Quit Smoking",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Hydration Goals",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Improve Sleep Quality",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-            ],
+            name: "Person 1",
+            email: "person1@gmail.com",
+            goals: [],
             _id: "66f904fd7476b35f343cecff",
-            about: " ",
+            about: "About Person 1",
             emailVerified: false,
             createdAt: "2024-09-29T07:41:38.077Z",
         },
         {
-            name: "person 2",
-            email: "npm@gmail.com",
-            goals: [
-                {
-                    goalName: "Quit Smoking",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Hydration Goals",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Improve Sleep Quality",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-            ],
+            name: "Person 2",
+            email: "person2@gmail.com",
+            goals: [],
             _id: "66f904fd7476b35f343cecff",
-            about: " ",
+            about: "About Person 2",
             emailVerified: false,
             createdAt: "2024-09-29T07:41:38.077Z",
         },
         {
-            name: "person 3",
-            email: "npm@gmail.com",
-            goals: [
-                {
-                    goalName: "Quit Smoking",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Hydration Goals",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-                {
-                    goalName: "Improve Sleep Quality",
-                    progress: 0,
-                    startDate: "2024-09-29T08:24:23.718Z",
-                    endDate: "2024-10-06T08:24:23.718Z",
-                    tasks: [
-                        { name: "task 1", isCompleted: true },
-                        { name: "task 2", isCompleted: false },
-                        { name: "task 3", isCompleted: true },
-                    ],
-                },
-            ],
+            name: "Person 3",
+            email: "person3@gmail.com",
+            goals: [],
             _id: "66f904fd7476b35f343cecff",
-            about: " ",
+            about: "About Person 3",
             emailVerified: false,
             createdAt: "2024-09-29T07:41:38.077Z",
         },
     ];
+
+    const [tasks, setTasks] = useState([
+        { name: "Task 1", isCompleted: false },
+        { name: "Task 2", isCompleted: false },
+        { name: "Task 3", isCompleted: false },
+    ]);
+    const [newTask, setNewTask] = useState("");
+
+    const handleAddTask = () => {
+        if (newTask.trim() !== "") {
+            setTasks([...tasks, { name: newTask, isCompleted: false }]);
+            setNewTask("");
+        }
+    };
+
+    const handleRemoveTask = (index) => {
+        const updatedTasks = tasks.filter((_, i) => i !== index);
+        setTasks(updatedTasks);
+    };
 
     return (
         <DashboardLayout>
@@ -150,11 +84,10 @@ const GoalPage = () => {
                     flexDirection: "column",
                     padding: 3,
                     flexGrow: 1,
-                    backgroundColor: "#f0f0f0", // Light background for contrast
-                    minHeight: "100vh", // Ensures the container covers full height
+                    backgroundColor: "#f0f0f0",
+                    minHeight: "100vh",
                 }}
             >
-                {/* Goal Name Header */}
                 <Typography
                     variant="h4"
                     sx={{
@@ -167,151 +100,144 @@ const GoalPage = () => {
                 </Typography>
 
                 <Grid container spacing={3}>
-                    {/* Daily Tasks Section */}
                     <Grid item xs={12} md={6}>
                         <Paper
                             elevation={3}
                             sx={{
                                 padding: 3,
                                 borderRadius: 2,
-                                backgroundColor: "#ffebee",
-                                minHeight: "300px",
+                                backgroundColor: "#5398dd", // Blue color for the container
+                                minHeight: "400px",
                                 display: "flex",
                                 flexDirection: "column",
-                                justifyContent: "ceanter",
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.1)", // Soft shadow
                             }}
                         >
                             <Typography
                                 variant="h6"
-                                sx={{ fontWeight: "bold" }}
+                                sx={{
+                                    fontWeight: "bold",
+                                    marginBottom: 2,
+                                    color: "#fff",
+                                }} // White font for the title
                             >
                                 Daily Tasks
                             </Typography>
-                            <Box sx={{ paddingLeft: 2, marginTop: 1 }}>
-                                <ul style={{ paddingLeft: 20 }}>
-                                    <li>
-                                        <input type="checkbox" /> Task 1
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" /> Task 2
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" /> Task 3
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" /> Task 4
-                                    </li>
-                                </ul>
+                            <Box sx={{ marginTop: 2, marginBottom: 2 }}>
+                                <TextField
+                                    variant="outlined"
+                                    label="New Task"
+                                    value={newTask}
+                                    onChange={(e) => setNewTask(e.target.value)}
+                                    fullWidth
+                                    sx={{ marginBottom: 2 }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    onClick={handleAddTask}
+                                    color="primary"
+                                    sx={{ borderRadius: 20 }} // Rounded button
+                                >
+                                    Add Task
+                                </Button>
                             </Box>
-                            <Typography
-                                variant="h6"
-                                sx={{ fontWeight: "bold", marginTop: 2 }}
-                            >
-                                Extra Tasks
-                            </Typography>
-                            <Box sx={{ paddingLeft: 2, marginTop: 1 }}>
-                                <ul style={{ paddingLeft: 20 }}>
-                                    <li>
-                                        <input type="checkbox" /> Extra Task 1
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" /> Extra Task 2
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" /> Extra Task 3
-                                    </li>
-                                </ul>
+                            <Box sx={{ marginTop: 2 }}>
+                                {tasks.map((task, index) => (
+                                    <Paper
+                                        key={index}
+                                        elevation={2}
+                                        sx={{
+                                            padding: 2,
+                                            marginBottom: 1,
+                                            borderRadius: 2,
+                                            display: "flex",
+                                            alignItems: "center",
+                                            backgroundColor: "#BBDEFB", // Light blue for tasks
+                                        }}
+                                    >
+                                        <Typography
+                                            sx={{
+                                                marginLeft: 1,
+                                                flexGrow: 1,
+                                                color: "#000", // Black font for task text
+                                                fontFamily:
+                                                    '"Roboto", "Helvetica", "Arial", sans-serif', // Nice font
+                                                fontWeight: 500,
+                                            }}
+                                        >
+                                            {task.name}
+                                        </Typography>
+                                        <Button
+                                            variant="outlined"
+                                            color="error"
+                                            onClick={() =>
+                                                handleRemoveTask(index)
+                                            }
+                                            sx={{ borderRadius: 20 }} // Rounded button
+                                        >
+                                            Remove
+                                        </Button>
+                                    </Paper>
+                                ))}
                             </Box>
                         </Paper>
                     </Grid>
 
-                    {/* Partner Status Section */}
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={6}>
                         <Paper
                             elevation={3}
                             sx={{
                                 padding: 3,
                                 borderRadius: 2,
                                 backgroundColor: "#fffde7",
-                                minHeight: "300px",
+                                minHeight: "400px",
                                 display: "flex",
                                 flexDirection: "column",
-                                justifyContent: "center",
+                                boxShadow: "0 4px 20px rgba(0,0,0,0.1)", // Soft shadow
                             }}
                         >
                             <Typography
                                 variant="h6"
-                                sx={{ fontWeight: "bold" }}
+                                sx={{
+                                    fontWeight: "bold",
+                                    marginBottom: 2, // Added margin to match Daily Tasks
+                                }}
                             >
                                 Partner Status
                             </Typography>
-                            <Box sx={{ paddingLeft: 2, marginTop: 1 }}>
+                            <Box sx={{ marginTop: 1 }}>
                                 <ul style={{ paddingLeft: 20 }}>
-                                    {matchedUsers.map((el) => {
-                                        return (
-                                            <li>
-                                                <input type="checkbox" />{" "}
-                                                {el.name}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Box>
-                        </Paper>
-                    </Grid>
-
-                    {/* Weekly View Section */}
-                    <Grid item xs={12} md={3}>
-                        <Paper
-                            elevation={3}
-                            sx={{
-                                padding: 3,
-                                borderRadius: 2,
-                                backgroundColor: "#fffde7",
-                                minHeight: "300px",
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Typography
-                                variant="h6"
-                                sx={{ fontWeight: "bold" }}
-                            >
-                                This Week
-                            </Typography>
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    width: "100%",
-                                    marginTop: 2,
-                                    paddingLeft: 2,
-                                    paddingRight: 2,
-                                }}
-                            >
-                                {["M", "T", "W", "Th", "F", "Sat", "Sun"].map(
-                                    (day) => (
-                                        <Box
-                                            key={day}
-                                            sx={{
-                                                display: "flex",
-                                                flexDirection: "column",
-                                                alignItems: "center",
-                                                width: 30,
-                                            }}
-                                        >
-                                            <Typography
-                                                variant="body2"
-                                                sx={{ fontWeight: "bold" }}
+                                    {allUsers &&
+                                        allUsers.map((el: any, key) => (
+                                            <li
+                                                key={key}
+                                                style={{ marginBottom: 4 }}
                                             >
-                                                {day}
-                                            </Typography>
-                                            <input type="checkbox" />
-                                        </Box>
-                                    )
-                                )}
+                                                {" "}
+                                                {/* Changed ul to li for proper list styling */}
+                                                <Typography
+                                                    sx={{
+                                                        color: "#000", // Black font for names
+                                                        fontFamily:
+                                                            '"Roboto", "Helvetica", "Arial", sans-serif',
+                                                        fontWeight: 500, // Match font weight
+                                                        fontSize: "1rem", // Adjust font size to match Daily Tasks
+                                                    }}
+                                                >
+                                                    {el.name} -
+                                                    {el.goals &&
+                                                        el.goals.find(
+                                                            (e: any) => {
+                                                                return (
+                                                                    e.goalName ==
+                                                                    goal
+                                                                );
+                                                            }
+                                                        )?.progress}
+                                                </Typography>
+                                            </li>
+                                        ))}
+                                </ul>
                             </Box>
                         </Paper>
                     </Grid>
@@ -322,53 +248,3 @@ const GoalPage = () => {
 };
 
 export default GoalPage;
-
-// {
-//     /* Weekly View Section */
-// }
-// <Grid item xs={12} md={3}>
-//     <Paper
-//         elevation={3}
-//         sx={{
-//             padding: 3,
-//             borderRadius: 2,
-//             backgroundColor: "#fffde7",
-//             minHeight: "300px",
-//             display: "flex",
-//             flexDirection: "column",
-//             alignItems: "center",
-//             justifyContent: "center",
-//         }}
-//     >
-//         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-//             This Week
-//         </Typography>
-//         <Box
-//             sx={{
-//                 display: "flex",
-//                 justifyContent: "space-between",
-//                 width: "100%",
-//                 marginTop: 2,
-//                 paddingLeft: 2,
-//                 paddingRight: 2,
-//             }}
-//         >
-//             {["M", "T", "W", "Th", "F", "Sat", "Sun"].map((day) => (
-//                 <Box
-//                     key={day}
-//                     sx={{
-//                         display: "flex",
-//                         flexDirection: "column",
-//                         alignItems: "center",
-//                         width: 30,
-//                     }}
-//                 >
-//                     <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-//                         {day}
-//                     </Typography>
-//                     <input type="checkbox" />
-//                 </Box>
-//             ))}
-//         </Box>
-//     </Paper>
-// </Grid>;

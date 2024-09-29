@@ -36,6 +36,7 @@
     "eslint-config-next": "13.4.18",
     "express-session": "^1.17.3",
     "formik": "^2.4.3",
+    "groq-sdk": "^0.7.0",
     "next": "13.4.18",
     "next-connect": "^0.13.0",
     "next-session": "^4.0.5",

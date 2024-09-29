@@ -13,8 +13,6 @@ const NavItem = ({ href, icon, title }: IProps) => {
     const router = useRouter();
 
     const active = href ? router.pathname.includes(href) : false;
-    console.log("href: ", href);
-    console.log("active: ", active);
 
     return (
         <div

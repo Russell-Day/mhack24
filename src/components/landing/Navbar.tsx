@@ -9,7 +9,6 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
 import { useUser } from "@/lib/hooks/useUser";
@@ -26,11 +25,18 @@ const Navbar = () => {
     };
 
     const pages = ["Features"];
-
     const { data } = useUser();
 
     return (
-        <AppBar sx={{ backgroundColor: "white" }} position="static">
+        <AppBar
+            position="sticky"
+            sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.7)", // Slightly transparent background
+                boxShadow: "none",
+                backdropFilter: "blur(10px)", // Blurring the background for a modern feel
+                borderRadius: "0 0 20px 20px", // Keep the rounded corners
+            }}
+        >
             <Container>
                 <Toolbar disableGutters>
                     <Link href="/" style={{ textDecoration: "none" }} passHref>
@@ -41,13 +47,13 @@ const Navbar = () => {
                                 fontSize: 30,
                                 fontWeight: 700,
                                 letterSpacing: ".3rem",
-                                textDecoration: "none",
-                                color: "black",
+                                color: "#333333", // Cool Gray for consistent look
                             }}
                         >
-                            DuoHealth
+                            HealthHive
                         </Typography>
                     </Link>
+
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -55,7 +61,8 @@ const Navbar = () => {
                         }}
                     >
                         <IconButton size="large" onClick={handleOpenNavMenu}>
-                            <MenuIcon />
+                            <MenuIcon sx={{ color: "#333333" }} />{" "}
+                            {/* Cool Gray for icon */}
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -85,7 +92,10 @@ const Navbar = () => {
                                         key={page}
                                         onClick={handleCloseNavMenu}
                                     >
-                                        <Typography textAlign="center">
+                                        <Typography
+                                            textAlign="center"
+                                            sx={{ color: "#333333" }} // Cool Gray for menu items
+                                        >
                                             {page}
                                         </Typography>
                                     </MenuItem>
@@ -93,6 +103,7 @@ const Navbar = () => {
                             ))}
                         </Menu>
                     </Box>
+
                     <Typography
                         variant="h5"
                         noWrap
@@ -102,15 +113,15 @@ const Navbar = () => {
                             mr: 2,
                             display: { xs: "flex", md: "none" },
                             flexGrow: 1,
-
                             fontWeight: 700,
                             letterSpacing: ".3rem",
-                            color: "inherit",
+                            color: "#333333", // Cool Gray for mobile branding
                             textDecoration: "none",
                         }}
                     >
                         DuoHealth
                     </Typography>
+
                     <Box
                         sx={{
                             flexGrow: 1,
@@ -126,7 +137,7 @@ const Navbar = () => {
                                 <Button
                                     sx={{
                                         my: 2,
-                                        color: "black",
+                                        color: "#333333", // Cool Gray for buttons
                                         display: "block",
                                     }}
                                 >
@@ -136,6 +147,7 @@ const Navbar = () => {
                         ))}
                     </Box>
 
+                    {/* Conditional render based on user data */}
                     {!data?.payload && (
                         <Box>
                             <Link
@@ -146,7 +158,13 @@ const Navbar = () => {
                                 <Button
                                     disabled={!data}
                                     size="large"
-                                    color="secondary"
+                                    sx={{
+                                        color: "#007BFF", // Electric Blue for register button
+                                        borderColor: "#007BFF",
+                                        "&:hover": {
+                                            backgroundColor: "#e6f0ff", // Lighter blue on hover
+                                        },
+                                    }}
                                     variant="outlined"
                                 >
                                     Register
@@ -154,6 +172,7 @@ const Navbar = () => {
                             </Link>
                         </Box>
                     )}
+
                     <Box sx={{ marginLeft: 2 }}>
                         {!data?.payload ? (
                             <Link
@@ -164,7 +183,13 @@ const Navbar = () => {
                                 <Button
                                     disabled={!data}
                                     size="large"
-                                    color="primary"
+                                    sx={{
+                                        color: "#007BFF", // Electric Blue for sign-in button
+                                        borderColor: "#007BFF",
+                                        "&:hover": {
+                                            backgroundColor: "#e6f0ff",
+                                        },
+                                    }}
                                     variant="outlined"
                                 >
                                     Sign in
@@ -178,7 +203,13 @@ const Navbar = () => {
                             >
                                 <Button
                                     size="large"
-                                    color="primary"
+                                    sx={{
+                                        backgroundColor: "#007BFF", // Electric Blue for dashboard button
+                                        color: "white",
+                                        "&:hover": {
+                                            backgroundColor: "#0056b3", // Darker blue on hover
+                                        },
+                                    }}
                                     variant="contained"
                                 >
                                     Dashboard

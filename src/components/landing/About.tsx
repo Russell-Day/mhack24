@@ -44,13 +44,13 @@ const AboutUs = () => {
                     health, or lifestyle improvement!
                 </Typography>
                 <Grid container spacing={4}>
-                    {/* Why DuoHealth Section */}
+                    {/* Why Us Section */}
                     <Grid item xs={12} md={4}>
                         <Typography
                             variant="h5"
                             sx={{ fontWeight: "bold", mb: 2, color: "#333" }}
                         >
-                            Why DuoHealth?
+                            Why HealthHive?
                         </Typography>
                         <Box
                             sx={{
