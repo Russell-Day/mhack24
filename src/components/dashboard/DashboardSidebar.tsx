@@ -220,7 +220,7 @@ const DashboardSidebar = ({ open, onClose }: IProps) => {
                                 <NavItem
                                     key={item.goalName}
                                     icon={<span style={{ width: 0 }}></span>}
-                                    href={`goal/${item.goalName
+                                    href={`/goal/${item.goalName
                                         .split(" ")
                                         .join("-")}`}
                                     title={item.goalName}

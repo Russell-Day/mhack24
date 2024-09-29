@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 // Define your API key here
-const API_KEY = "AIzaSyBAVIHmnYml09ug9yuBHOsMY6u-iNgb5bk"; // Replace with your actual API key
+const API_KEY = ""; // Replace with your actual API key
 
 const ChatBot: React.FC = () => {
     const [userMessage, setUserMessage] = useState<string>(""); // For user's input
