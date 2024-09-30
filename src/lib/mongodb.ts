@@ -4,8 +4,8 @@ if (!process.env.MONGODB_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
-// const uri = process.env.MONGODB_URI;
-const uri = "mongodb+srv://test:test@cluster0.w7sbe.mongodb.net/";
+const uri = process.env.MONGODB_URI;
+// const uri = "mongodb+srv://test:test@cluster0.w7sbe.mongodb.net/";
 const options = {};
 
 let indexesCreated = false;
